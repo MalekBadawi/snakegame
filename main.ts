@@ -4,6 +4,10 @@ input.onButtonPressed(Button.A, function () {
     if (direction == -1) {
         direction = 3
     }
+    if (body_alive == true) {
+        basic.pause(500)
+        body.turn(Direction.Left, 90)
+    }
 })
 input.onButtonPressed(Button.AB, function () {
     while (snakehead.get(LedSpriteProperty.X) >= 0 && snakehead.get(LedSpriteProperty.X) <= 5) {
@@ -21,6 +25,7 @@ input.onButtonPressed(Button.B, function () {
         direction = 0
     }
     if (body_alive == true) {
+        basic.pause(500)
         body.turn(Direction.Right, 90)
     }
 })
@@ -30,10 +35,12 @@ let direction = 0
 let snakehead: game.LedSprite = null
 snakehead = game.createSprite(0, 0)
 let fruit = game.createSprite(randint(0, 5), randint(0, 5))
+let body_number = 0
 basic.forever(function () {
     if (snakehead.isTouching(fruit)) {
         fruit.set(LedSpriteProperty.X, randint(0, 5))
         fruit.set(LedSpriteProperty.Y, randint(0, 5))
+        body_number = body_number + 1
         if (direction == 0) {
             body = game.createSprite(snakehead.get(LedSpriteProperty.X) - 1, snakehead.get(LedSpriteProperty.Y))
             body_alive = true
@@ -46,8 +53,15 @@ basic.forever(function () {
         } else if (direction == 3) {
             body = game.createSprite(snakehead.get(LedSpriteProperty.X), snakehead.get(LedSpriteProperty.Y) + 1)
             body_alive = true
-        } else {
-        	
+        }
+    }
+    while (snakehead.isTouching(fruit)) {
+        if (direction == 1) {
+            body.turn(Direction.Right, 90)
+        } else if (direction == 2) {
+            body.turn(Direction.Right, 180)
+        } else if (direction == 3) {
+            body.turn(Direction.Right, 270)
         }
     }
 })
