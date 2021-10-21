@@ -9,8 +9,8 @@ input.onButtonPressed(Button.AB, function () {
             bodyx = snakehead.get(LedSpriteProperty.X)
             bodyy = snakehead.get(LedSpriteProperty.Y)
             snakehead.move(1)
-            led.plot(bodyx, bodyy)
             basic.pause(500)
+            body = game.createSprite(bodyx, bodyy)
         } else {
             snakehead.move(1)
             basic.pause(500)
@@ -20,6 +20,7 @@ input.onButtonPressed(Button.AB, function () {
 input.onButtonPressed(Button.B, function () {
     snakehead.turn(Direction.Right, 90)
 })
+let body: game.LedSprite = null
 let bodyy = 0
 let bodyx = 0
 let fruit: game.LedSprite = null
